@@ -1,7 +1,7 @@
 import styles from './App.module.css';
 import { Header } from './components/Header';
 import { NewTaskForm } from './components/NewTaskForm';
-import { Task } from './components/Task';
+import { TaskDisplay } from './components/TaskDisplay';
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
       <Header />
       <NewTaskForm />
       <main>
-        <Task />
+        <TaskDisplay />
       </main>
     </div>
   )
