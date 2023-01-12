@@ -19,6 +19,24 @@ const taskList = [
 
 export function TaskDisplay() {
 
+  function displayTasks() {
+    if (taskList.length === 0) {
+      return <NoTasks />;
+    } else {
+      return (
+        taskList.map(task => {
+          return (
+            <Task
+              key={task.id}
+              content={task.content}
+              finished={task.finished}
+            />
+          )
+        })
+      )
+    }
+  }
+
   return (
     <article>
       <div className={styles.numberOfTaskDisplay}>
@@ -34,17 +52,7 @@ export function TaskDisplay() {
         </header>
 
         <div className={styles.taskDisplay}>
-          {taskList.map(task => {
-            return (
-              <Task
-                key={task.id}
-                content={task.content}
-                finished={task.finished}
-              />
-            )
-          })}
-
-          <NoTasks />
+          {displayTasks()}
         </div>
       </div>
     </article>
