@@ -6,13 +6,6 @@ import { FormEvent, useState } from 'react';
 import styles from './TaskDisplay.module.css';
 import { PlusCircle } from 'phosphor-react';
 
-interface TaskProps {
-  id: string;
-  content: string;
-  finished: boolean;
-  onDeleteTask: (key: {}) => void;
-  onCreateTask: (event: FormEvent<Element>) => void;
-}
 
 export function TaskDisplay() {
   const [taskList, setTaskList] = useState([
@@ -34,9 +27,9 @@ export function TaskDisplay() {
     finished: false,
   })
 
-  function deleteTask(taskToDelete: {}) {
+  function deleteTask(taskToDelete: string) {
     const tasksWithoutDeletedOne = taskList.filter(task => {
-      return task !== taskToDelete;
+      return task.id !== taskToDelete;
     })
 
     console.log(`Deletar a task: ${taskToDelete}`)

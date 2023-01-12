@@ -8,13 +8,13 @@ interface TaskProps {
   id: string;
   content: string;
   finished: boolean;
-  onDeleteTask: (key: {}) => void;
+  onDeleteTask: (key: string) => void;
   onCreateTask: (event: FormEvent<Element>) => void;
 }
 
-export function Task({ content, finished, onDeleteTask }: TaskProps) {
+export function Task({ id, content, finished, onDeleteTask }: TaskProps) {
   function handleDeleteTask() {
-    onDeleteTask(content);
+    onDeleteTask(id);
   }
 
   function tasksToShow() {
