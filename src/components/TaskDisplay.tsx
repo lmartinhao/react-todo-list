@@ -21,6 +21,7 @@ export function TaskDisplay() {
     }
   ])
 
+  const [newTaskText, setNewTaskText] = useState('')
 
   function deleteTask(taskToDelete: string) {
     const tasksWithoutDeletedOne = taskList.filter(task => {
@@ -35,18 +36,25 @@ export function TaskDisplay() {
   }) {
     event.preventDefault();
 
-    const newTaskText = {
+    const newTask = {
       id: uuidv4(),
       content: event.target.task.value,
       finished: false
     }
-    setTaskList([...taskList, newTaskText]);
+    setTaskList([...taskList, newTask]);
+    setNewTaskText('');
   };
 
   function handleNewTaskInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('Hey, não se esqueça de escrever alguma coisa 😯');
   }
 
+  function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement> & {
+    target: HTMLFormElement
+  }) {
+    setNewTaskText(event.target.value);
+    console.log(event.target.value);
+  }
 
   function displayTasks() {
     if (taskList.length === 0) {
@@ -76,7 +84,9 @@ export function TaskDisplay() {
           name="task"
           className={styles.taskInputArea}
           placeholder="Adicione uma nova tarefa"
-          onInvalid={() => handleNewTaskInvalid}
+          value={newTaskText}
+          onChange={handleNewTaskChange}
+          onInvalid={handleNewTaskInvalid}
           required
         />
         <button className={styles.addBtn} type="submit">
