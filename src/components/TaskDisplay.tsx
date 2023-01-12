@@ -1,7 +1,7 @@
 import { NoTasks } from './NoTasks';
 import { Task } from './Task';
 import { v4 as uuidv4 } from 'uuid';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 import styles from './TaskDisplay.module.css';
 import { PlusCircle } from 'phosphor-react';
@@ -21,33 +21,32 @@ export function TaskDisplay() {
     }
   ])
 
-  const [newTask, setNewTask] = useState({
-    id: uuidv4(),
-    content: "",
-    finished: false,
-  })
 
   function deleteTask(taskToDelete: string) {
     const tasksWithoutDeletedOne = taskList.filter(task => {
       return task.id !== taskToDelete;
     })
 
-    console.log(`Deletar a task: ${taskToDelete}`)
     setTaskList(tasksWithoutDeletedOne);
   }
 
-  function handleCreateNewTask(event: FormEvent) {
+  function handleCreateNewTask(event: FormEvent<HTMLFormElement> & {
+    target: HTMLFormElement
+  }) {
     event.preventDefault();
 
-    setTaskList([...taskList, newTask]);
-    setNewTask({
+    const newTaskText = {
       id: uuidv4(),
-      content: "",
-      finished: false,
-    });
+      content: event.target.task.value,
+      finished: false
+    }
+    setTaskList([...taskList, newTaskText]);
+  };
 
-    console.log('Criando uma nova tarefa')
+  function handleNewTaskInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
+    event.target.setCustomValidity('Hey, não se esqueça de escrever alguma coisa 😯');
   }
+
 
   function displayTasks() {
     if (taskList.length === 0) {
@@ -73,9 +72,11 @@ export function TaskDisplay() {
   return (
     <article>
       <form onSubmit={handleCreateNewTask} className={styles.taskForm}>
-        <input className={styles.taskInputArea}
-          name='task'
+        <textarea
+          name="task"
+          className={styles.taskInputArea}
           placeholder="Adicione uma nova tarefa"
+          onInvalid={() => handleNewTaskInvalid}
           required
         />
         <button className={styles.addBtn} type="submit">

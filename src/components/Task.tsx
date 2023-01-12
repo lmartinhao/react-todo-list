@@ -9,7 +9,7 @@ interface TaskProps {
   content: string;
   finished: boolean;
   onDeleteTask: (key: string) => void;
-  onCreateTask: (event: FormEvent<Element>) => void;
+  onCreateTask: (event: FormEvent<HTMLFormElement> & { target: HTMLFormElement; }) => void;
 }
 
 export function Task({ id, content, finished, onDeleteTask }: TaskProps) {
