@@ -1,0 +1,45 @@
+.taskForm {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0rem;
+  gap: .5rem;
+
+  position: absolute;
+  width: 46rem;
+  height: 3.375rem;
+  left: calc(50% - 46rem/2);
+  top: 10.813rem;
+}
+
+.taskInputArea {
+  box-sizing: border-box;
+
+  padding: 1rem;
+  gap: .5rem;
+  width: 39.875rem;
+  height: 3.375rem;
+
+  background: var(--gray-500);
+  border: 1px solid var(--gray-700);
+  border-radius: 8px;
+}
+
+.addBtn {
+  width: 5.625rem;
+  height: 3.25rem;
+  border: 0;
+
+  background: var(--blue-500);
+  border-radius: .5rem;
+
+  color: var(--gray-100);
+  font-weight: 700;
+  font-size: 0.875rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5rem;
+}

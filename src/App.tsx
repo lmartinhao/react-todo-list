@@ -1,14 +1,17 @@
-import { useState } from 'react'
 import styles from './App.module.css';
 import { Header } from './components/Header';
+import { NewTaskForm } from './components/NewTaskForm';
+import { Task } from './components/Task';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       <Header />
-
+      <NewTaskForm />
+      <main>
+        <Task />
+      </main>
     </div>
   )
 }
