@@ -11,12 +11,12 @@ export function TaskDisplay() {
   const [taskList, setTaskList] = useState([
     {
       id: uuidv4(),
-      content: "Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer. Integer urna interdum massa libero auctor neque turpis turpis semper.",
+      content: "Olá! Esta é uma tarefa fictícia. Marque como concluída ou exclua para ver o funcionamento da aplicação :)",
       finished: false
     },
     {
       id: uuidv4(),
-      content: "Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.",
+      content: "Criar uma nota colocando o texto no campo acima.",
       finished: true
     }
   ])
