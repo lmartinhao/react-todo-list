@@ -21,13 +21,16 @@ export function TaskDisplay() {
     }
   ])
 
+  const completedTasks = taskList.filter(task => {
+    return task.finished;
+  }).length
+
   const [newTaskText, setNewTaskText] = useState('')
 
   function deleteTask(taskToDelete: string) {
     const tasksWithoutDeletedOne = taskList.filter(task => {
       return task.id !== taskToDelete;
     })
-
     setTaskList(tasksWithoutDeletedOne);
   }
 
@@ -41,19 +44,47 @@ export function TaskDisplay() {
       content: event.target.task.value,
       finished: false
     }
-    setTaskList([...taskList, newTask]);
+    setTaskList([newTask, ...taskList]);
     setNewTaskText('');
   };
 
-  function handleNewTaskInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
+  function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>) {
     event.target.setCustomValidity('Hey, não se esqueça de escrever alguma coisa 😯');
   }
 
-  function handleNewTaskChange(event: ChangeEvent<HTMLTextAreaElement> & {
+  function handleNewTaskChange(event: ChangeEvent<HTMLInputElement> & {
     target: HTMLFormElement
   }) {
     setNewTaskText(event.target.value);
-    console.log(event.target.value);
+  }
+
+  function setTaskAsCompleted(taskToComplete: string) {
+    const tasksWithoutCompletedOne = taskList.filter(task => {
+      return task.id !== taskToComplete;
+    })
+
+    const completedTask = {
+      id: taskToComplete,
+      content: taskList.find(task => task.id === taskToComplete)!.content,
+      finished: true,
+    }
+    const taskListWithCompletedOnesMarked = [...tasksWithoutCompletedOne, completedTask];
+    setTaskList(taskListWithCompletedOnesMarked);
+  }
+
+  function setTaskAsOpen(taskToOpen: string) {
+    const tasksWithoutOpenedOne = taskList.filter(task => {
+      return task.id !== taskToOpen;
+    })
+
+    const openTask = {
+      id: taskToOpen,
+      content: taskList.find(task => task.id === taskToOpen)!.content,
+      finished: false,
+    }
+
+    const taskListWithOpenedOnesMarked = [openTask, ...tasksWithoutOpenedOne];
+    setTaskList(taskListWithOpenedOnesMarked);
   }
 
   function displayTasks() {
@@ -70,6 +101,8 @@ export function TaskDisplay() {
               finished={task.finished}
               onDeleteTask={deleteTask}
               onCreateTask={handleCreateNewTask}
+              onCompleteTask={setTaskAsCompleted}
+              onOpenTask={setTaskAsOpen}
             />
           )
         })
@@ -80,7 +113,7 @@ export function TaskDisplay() {
   return (
     <article>
       <form onSubmit={handleCreateNewTask} className={styles.taskForm}>
-        <textarea
+        <input
           name="task"
           className={styles.taskInputArea}
           placeholder="Adicione uma nova tarefa"
@@ -98,11 +131,11 @@ export function TaskDisplay() {
         <header>
           <div className={styles.numberOfTasks}>
             <span className={styles.blueText}>Tarefas criadas</span>
-            <span className={styles.numberOfTasksText}>0</span>
+            <span className={styles.numberOfTasksText}>{taskList.length}</span>
           </div>
           <div className={styles.numberOfTasks}>
             <span className={styles.purpleText}>Concluídas</span>
-            <span className={styles.numberOfTasksText}>10 de 10</span>
+            <span className={styles.numberOfTasksText}>{completedTasks} de {taskList.length}</span>
           </div>
         </header>
 
