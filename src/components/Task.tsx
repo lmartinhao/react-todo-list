@@ -39,7 +39,7 @@ export function Task({ id, content, finished, onDeleteTask, onCompleteTask, onOp
     } else {
       return (
         <div className={styles.task}>
-          <Circle onClick={handleCompleteTask}/>
+          <Circle onClick={handleCompleteTask} className={styles.taskCheckCircleIcon} />
           <span className={styles.openTask}>{content}</span>
           <Trash onClick={handleDeleteTask} className={styles.removeTaskIcon} size={20}/>
         </div>
